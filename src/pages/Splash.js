@@ -64,12 +64,17 @@ export default class Splash extends Lightning.Component{
                 }}
         ]});
 
-        /**
-         * @todo:
-         * Add _handleEnter(){}
-         * and on enter call Router.navigate("movies")
-         * to navigate to the correct route.
-         */
+
+    }
+
+    /**
+     * @todo:
+     * Add _handleEnter(){}
+     * and on enter call Router.navigate("movies")
+     * to navigate to the correct route.
+     */
+    _handleEnter() {
+        Router.navigate('movies')
     }
 
     _active() {

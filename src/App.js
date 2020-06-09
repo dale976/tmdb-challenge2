@@ -2,7 +2,7 @@ import { Lightning, Utils, Router } from 'wpe-lightning-sdk';
 import provider from "./lib/data-provider";
 import routes from "./lib/routes";
 import {init as initApi} from "./lib/Api"
-import {Splash} from "./pages";
+import {Main, Splash} from "./pages";
 
 export default class App extends Lightning.Component {
 
@@ -10,7 +10,9 @@ export default class App extends Lightning.Component {
         return [
             {family: 'SourceSansPro-Regular', url: Utils.asset('fonts/SourceSansPro-Regular.ttf'), descriptors: {}},
             {family: 'SourceSansPro-Black', url: Utils.asset('fonts/SourceSansPro-Black.ttf'), descriptors: {}},
-            {family: 'SourceSansPro-Bold', url: Utils.asset('fonts/SourceSansPro-Bold.ttf'), descriptors: {}}
+            {family: 'SourceSansPro-Bold', url: Utils.asset('fonts/SourceSansPro-Bold.ttf'), descriptors: {}},
+            {family: 'Magra-Bold', url: Utils.asset('fonts/Magra-Bold.ttf'), descriptors: {}},
+            {family: 'Magra-Regular', url: Utils.asset('fonts/Magra-Regular.ttf'), descriptors: {}}
         ];
     }
 
@@ -21,15 +23,13 @@ export default class App extends Lightning.Component {
         Router.startRouter({
             appInstance: this, provider, routes
         });
+        Router.navigate('Splash');
     }
 
     static _template() {
         return {
             Pages: {
                 forceZIndexContext: true, w: 1000
-            },
-            Splash:{
-               type: Splash
             },
             Widgets: {
                 Menu:{
@@ -38,7 +38,6 @@ export default class App extends Lightning.Component {
                 }
             },
             Loading: {
-
             },
             Wrapper:{
                 Label:{
@@ -46,6 +45,10 @@ export default class App extends Lightning.Component {
                 }
             }
         };
+    }
+
+    _dataLoaded() {
+        console.log('in here???????????????')
     }
 
     _handleEnter(){
@@ -57,11 +60,25 @@ export default class App extends Lightning.Component {
     }
 
     _handleLeft(){
-        this.setIndex(this.index - 1);
+        // this.setIndex(this.index - 1);
     }
 
      static _states() {
         return [
+            class Splash extends this {
+                $enter(){
+                    console.log('splash enter')
+                }
+
+                $exit(){
+                    this.tag('Splash').visible = false
+                    console.log('splash exit')
+                }
+
+                _getFocused(){
+                    return this.tag('Splash')
+                }
+            },
             class Loading extends this {
                 $enter() {
                     this.tag("Loading").visible = true;
@@ -86,6 +103,18 @@ export default class App extends Lightning.Component {
                     // we delegate focus to selected widget
                     // so it can consume remotecontrol presses
                     return this._widget;
+                }
+            },
+            class Main extends this {
+                $enter(){
+                    console.log('main enter')
+                }
+                $exit(){
+                    console.log('main exit')
+                }
+                _dataLoaded() {
+                    console.log("in here?")
+                    this._setState('Main')
                 }
             }
         ];
