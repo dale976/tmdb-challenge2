@@ -4,16 +4,27 @@ import {List} from "../components"
 export default class Main extends Lightning.Component{
     static _template() {
         return {
-            scale:0.5,
+            Background: {
+                rect: true, colorBottom: 0xff000000, w: 1920, h: 1080, x: 0, y: 0
+            },
             List: {
-                x: 100, y: 560, zIndex: 3, type: List, alpha: 1
+                x: 100, y: 560, zIndex: 3, type: List, alpha: 1, signals: {onListScroll: 'onScroll'}
             },
             // @todo: add logo
             Logo: {
                 src: Utils.asset("images/logo.png"),
-                x: 75, y: 75, alpha: 1,
+                x: 100, y: 100, alpha: 1,
             }
         };
+    }
+
+    static _states() {
+        return [
+            class List extends this {
+                onScroll(args) {
+                }
+            }
+        ];
     }
 
     _init() {
