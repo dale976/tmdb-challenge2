@@ -11,7 +11,7 @@ export default class Main extends Lightning.Component{
             // @todo: add logo
             Logo: {
                 src: Utils.asset("images/logo.png"),
-                mount: 0.5, x: 285, y: 160, alpha: 1,
+                x: 75, y: 75, alpha: 1,
             }
         };
     }

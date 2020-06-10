@@ -47,10 +47,6 @@ export default class App extends Lightning.Component {
         };
     }
 
-    _dataLoaded() {
-        console.log('in here???????????????')
-    }
-
     _handleEnter(){
         // call
     }
@@ -65,20 +61,6 @@ export default class App extends Lightning.Component {
 
      static _states() {
         return [
-            class Splash extends this {
-                $enter(){
-                    console.log('splash enter')
-                }
-
-                $exit(){
-                    this.tag('Splash').visible = false
-                    console.log('splash exit')
-                }
-
-                _getFocused(){
-                    return this.tag('Splash')
-                }
-            },
             class Loading extends this {
                 $enter() {
                     this.tag("Loading").visible = true;
@@ -105,18 +87,6 @@ export default class App extends Lightning.Component {
                     return this._widget;
                 }
             },
-            class Main extends this {
-                $enter(){
-                    console.log('main enter')
-                }
-                $exit(){
-                    console.log('main exit')
-                }
-                _dataLoaded() {
-                    console.log("in here?")
-                    this._setState('Main')
-                }
-            }
         ];
     }
 

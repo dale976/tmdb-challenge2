@@ -8,10 +8,10 @@ export default class Item extends Lightning.Component{
                 src: Utils.asset('images/logo-large.png'),
             },
             Title: {
-                y: 310, x: 20,
+                y: 310, x: 15, h: 50,
                 text: {
-                    fontFace: "Magra-Regular", fontSize: 24, wordWrap: false,
-                    textOverflow: 'ellipsis', w: 185 + 15 - (2 * 20)
+                    fontFace: "Magra-Regular", fontSize: 24, wordWrap: true,
+                    textOverflow: 'ellipsis', w: 220 - (2 * 15)
                 },
             },
             alpha: 0.75
@@ -24,13 +24,31 @@ export default class Item extends Lightning.Component{
      */
 
     _focus() {
-        this.setSmooth('alpha', 1);
-        this.tag('Title').text.fontFace = 'Magra-Bold';
+        this.patch({
+            smooth: {
+                alpha: 1,
+                scale: 1.1
+            },
+            Title: {
+                text: {
+                    fontFace: 'Magra-Bold'
+                }
+            }
+        })
     }
 
     _unfocus() {
-        this.setSmooth('alpha', 0.75);
-        this.tag('Title').text.fontFace = 'Magra-Regularj';
+        this.patch({
+            smooth: {
+                alpha: 0.75,
+                scale: 1
+            },
+            Title: {
+                text: {
+                    fontFace: 'Magra-Regular'
+                }
+            }
+        })
     }
 
     set item(v){
@@ -38,7 +56,7 @@ export default class Item extends Lightning.Component{
         this.tag('Image').src = getImgUrl(v.poster_path)
         this.patch({
             Image: {
-                src: getImgUrl(v.poster_path)
+                src: getImgUrl(v.poster_path), w: 220
             },
             Title: {
                 text: {text: v.original_title}

@@ -1,6 +1,9 @@
 import {Lightning} from "wpe-lightning-sdk";
 import Item from '../item/Item';
 
+const ITEM_WIDTH = 220;
+const PADDING = 15;
+
 export default class List extends Lightning.Component {
     static _template() {
         return {
@@ -36,6 +39,8 @@ export default class List extends Lightning.Component {
          * on selected item
          */
         this._index = index;
+        let xOffset = -(ITEM_WIDTH + (2 * PADDING)) * index;
+        this.tag('Movies').setSmooth('x', xOffset)
     }
 
     set label(v) {
@@ -45,12 +50,11 @@ export default class List extends Lightning.Component {
 
     set movies(v) {
         // we add an array of object with type: Item
-        // console.log('V  : ', v)
         this.tag('Movies').children = v.map((el, idx) => {
             return {
                 type: Item,
                 item: el,
-                x: idx * 185
+                x: idx * (ITEM_WIDTH + (2 * PADDING))
             }
         })
     }
